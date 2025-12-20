@@ -36,7 +36,12 @@
     NLP embeddings · keyword weighting · daily ETL · AWS · SQL
   </p>
   <p>
-    Built an end-to-end date pipeline to cluster similar articles, extract keywords, and summarize each cluster of articles into a concise paragraph.
+    This is an end-to-end date pipeline to cluster similar articles, extract keywords, and summarize each cluster of articles into a concise paragraph. 
+    Scraping was done with Selenium, orchestrated by AWS Lambda + EC2 
+    with a relational AWS RDS database for storage. 
+    Keywords are extracted using a weighted ensemble of Part-of-Speech + Named Entity recognition (spaCy), Semantic-Relevance (KeyBERT), and manually-included common keywords.
+    The article clustering process was decided by testing 2 different approaches:  [Centroid-Based Approach to Multi-Doc Summarizing](https://aclanthology.org/W00-0403.pdf) vs
+    [PRIMERA: Pyramid-based Masked Sentence Pre-Training for Multi-doc Summarizing)](https://arxiv.org/pdf/2110.08499). PRIMERA resulted in better results, see the (project repo)[https://github.com/chohbein/newsapp/blob/main/README.md] for more info on my process.
   </p>
 </section>
 
