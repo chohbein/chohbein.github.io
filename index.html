@@ -40,8 +40,8 @@
     Scraping was done with Selenium, orchestrated by AWS Lambda + EC2 
     with a relational AWS RDS database for storage. 
     Keywords are extracted using a weighted ensemble of Part-of-Speech + Named Entity recognition (spaCy), Semantic-Relevance (KeyBERT), and manually-included common keywords.
-    The article clustering process was decided by testing 2 different approaches:  [Centroid-Based Approach to Multi-Doc Summarizing](https://aclanthology.org/W00-0403.pdf) vs
-    [PRIMERA: Pyramid-based Masked Sentence Pre-Training for Multi-doc Summarizing](https://arxiv.org/pdf/2110.08499). PRIMERA resulted in better results, see the [project repo](https://github.com/chohbein/newsapp/blob/main/README.md) for more info on my process.
+    The article clustering process was decided by testing 2 different approaches:  <a href="https://aclanthology.org/W00-0403.pdf">Centroid-Based Approach to Multi-Doc Summarizing</a> vs
+    <a href="https://arxiv.org/pdf/2110.08499">PRIMERA: Pyramid-based Masked Sentence Pre-Training for Multi-doc Summarizing</a>. Our testing found that PRIMARA gave better summaries; see the <a href="https://github.com/chohbein/newsapp/blob/main/README.md">project repo</a> for more info on my process.
   </p>
 </section>
 
