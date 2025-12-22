@@ -52,7 +52,7 @@
   <h4>Histopathologic Cancer Detection</h4>
   <p class="tech">Python · CNN · GPU Training</p>
   <ul style="list-style-type: disc; margin-left: 20px;">
-  <li>This is my final project for a deep learning course. I built a convolutional neural network to predict the presence of tumors in histopathologic images.</li>
+  <li>This is my final project for a deep learning course. I compared 2 different CNN architectures to predict the presence of tumors in histopathologic images.</li>
   <li>One of the major achievements I took from this project was the performance tuning I made to work within the limits of my poor little laptop GPU. </li>
   <li>Initially, I was hit with long overheating and long training times. I resolved this with techniques such as mixed precision, multiple workers, image downsizing, and batch-size tuning.</li>
   <li>I approached model architecture by testing 2 different hypotheses: Because my visual analysis of the iamges no noticable indications of cancerous images, I suspected a model focused on fine-grained details would work best.</li>
@@ -71,6 +71,21 @@
       </ul>
     </li>
   </ul>
+  <h6>Results</h6>
+  <p class="tech">
+  Our model focusing on fine details within the images scored better. Thus, we accept our hypothesis.
+  After further improving steps, we concluded with the following:
+  
+  <b>Final Results</b>
+
+  ROC-AUC:
+  0.9813459611111561
+  
+  [23973 2300]
+  [883 16849]
+  
+  False negative rate down to 2%
+  </p>
 </section>
 
 <section class="project">
