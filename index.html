@@ -47,7 +47,8 @@
   Your browser does not support the video tag.
 </video>
 </section>
-
+<hr>
+  
 <section class="project">
   <h4>Histopathologic Cancer Detection</h4>
   <p class="tech">Python · CNN · GPU Training</p>
@@ -56,14 +57,14 @@
   <li>One of the major achievements I took from this project was the performance tuning I made to work within the limits of my poor little laptop GPU. </li>
   <li>Initially, I was hit with long overheating and long training times. I resolved this with techniques such as mixed precision, multiple workers, image downsizing, and batch-size tuning.</li>
   <li>I approached model architecture by testing 2 different hypotheses: Because my visual analysis of the images showed no noticable indications of cancerous features, I suspected a model focused on fine-grained details would work best.</li>
-  <li>So, I built my first iteration with this hypothesis in mind: 
+  <li>H<sub>0</sub>: focus on fine-grained details
     <ul>
       <li>Small kernel sizes (3x3,1x1) to capture first spacial relationships then also refined features without losing spacial resolution.</li>
       <li>Minimal pooling to maintain detail. One pooling layer just to lessen computations.</li>
       <li>Padding = 1 to maintain edge information.</li>
       <li>Light dropout (0.3) to reduce overfitting while also maintaining its capacity to recognize subtle patterns.</li>
     </ul></li>
-    <li>My second hypothesis was the counter to the first: a focus on broad trends in the images will give better results.
+    <li>H<sub>1</sub>: a focus on broad trends in the images will give better results.
       <ul>
         <li>4x (5x5) kernels</li>
         <li>Aggressive pooling: maxpool after every conv layer to emphasize broader features.</li>
@@ -95,6 +96,7 @@
   Prioritized false-negative rate down to 2%
   </p>
 </section>
+<hr>
 
 <section class="project">
   <h4>Project 3</h4>
