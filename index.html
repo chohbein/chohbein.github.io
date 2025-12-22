@@ -59,8 +59,17 @@
   <li>So, I built my first iteration with this hypothesis in mind: 
     <ul>
       <li>Small kernel sizes (3x3,1x1) to capture first spacial relationships then also refined features without losing spacial resolution.</li>
-      <li>Delayed pooling (only after first conv layer)</li>
+      <li>Minimal pooling to maintain detail. One pooling layer just to lessen computations.</li>
+      <li>Padding = 1 to maintain edge information.</li>
+      <li>Light dropout (0.3) to reduce overfitting while also maintaining its capacity to recognize subtle patterns.</li>
     </ul></li>
+    <li>My second hypothesis was the counter to the first: a focus on broad trends in the images will give better results.
+      <ul>
+        <li>4x (5x5) kernels</li>
+        <li>Aggressive pooling: maxpool after every conv layer to emphasize broader features.</li>
+        <li>Higher dropout (0.5) to help broad-feature neurons from learning noise.
+      </ul>
+    </li>
   </ul>
 </section>
 
