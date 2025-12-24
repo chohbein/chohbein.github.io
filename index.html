@@ -51,7 +51,7 @@
   
 <section class="project">
   <h4>Histopathologic Cancer Detection</h4>
-  <p class="tech">Python · GPU Training · CNN · Torch · sklearn</p>
+  <p class="tech">CNN · GPU Training · Torch · sklearn</p>
   <ul style="list-style-type: disc; margin-left: 20px;">
   <li>This is my final project for a deep learning course. I compared 2 different CNN architectures to predict the presence of tumors in histopathologic images.</li>
   <li>One of the major achievements I took from this project was the performance tuning I made to work within the limits of my poor little laptop GPU. </li>
@@ -100,8 +100,18 @@
 
 <section class="project">
   <h4>Monet Painting GAN</h4>
-  <p class="tech">CycleGAN ·</p>
-  <p>mhm</p>
+  <p class="tech">GAN · </p>
+  <ul style="list-style-type: disc; margin-left: 20px;">
+    <li>This is an unpaired image style transfer to turn photos to Monet paintings.</li>
+    <li>In it, I compared 2 different architectural approaches to the problem: CycleGAN vs. a GAN conditioned on pre-trained CLIP embeddings.</li>
+    <li>CycleGAN</li>
+      <ul>
+        <li>Cycle-Consistent Generative Adversarial Network uses 2 pairs of generators and descriminators.</li>
+        <li>One generator translates from domain photo -> Monet, with the other doing the opposite.</li>
+        <li>Then, discriminators try to distinguish the generations from the real domain. Cycle-consistency loss measures how different the generations A->B->A are from the original domain.</li>
+      </ul>
+    <li></li>
+  </ul>
 </section>
 
   <h3>Skills</h3>
