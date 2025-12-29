@@ -100,19 +100,31 @@
 
 <section class="project">
   <h4>Monet Painting GAN</h4>
-  <p class="tech">GAN · </p>
+  <p class="tech">Unpaired Image Style Transfer · CycleGAN · CLIP Embeddings · GANs</p>
   <ul style="list-style-type: disc; margin-left: 20px;">
-    <li>This is an unpaired image style transfer to turn photos to Monet paintings.</li>
-    <li>In it, I compared 2 different architectural approaches to the problem: CycleGAN vs. a GAN conditioned on pre-trained CLIP embeddings.</li>
-    <li>CycleGAN</li>
+    <li>Unpaired image style transfer to turn photos into Monet-style paintings.</li>
+    <li>Compared two architectural approaches: CycleGAN (baseline) vs. a GAN conditioned on pre-trained CLIP embeddings.</li>
+    <li>CycleGAN (baseline)</li>
       <ul>
-        <li>Cycle-Consistent Generative Adversarial Network uses 2 pairs of generators and descriminators.</li>
-        <li>One generator translates from domain photo -> Monet, with the other doing the opposite.</li>
-        <li>Then, discriminators try to distinguish the generations from the real domain. Cycle-consistency loss measures how different the generations A->B->A are from the original domain.</li>
+        <li>Performed unpaired image-to-image translation as a baseline.</li>
+        <li>Stabilized and improved training with adjustments including spectral normalization, label smoothing, noise injection, delayed discriminator updates, mixed precision, and learning rate tuning.</li>
       </ul>
-    <li></li>
+    <li>CLIP-Conditioned GAN</li>
+      <ul>
+        <li>Uses frozen pre-trained CLIP embeddings to provide semantic guidance to the generator.</li>
+        <li>U-Net generator skip connections preserve fine-grained spatial detail and structure.</li>
+        <li>CLIP-based perceptual loss preserves the original content while applying Monet style.</li>
+      </ul>
   </ul>
+  <b>Results</b>
+  <p class="tech">
+    The CLIP-Conditioned approach achieved higher-quality Monet-style generations than the baseline while requiring only 1/3 of the training time. Longer training could further improve results.
+  </p>
+  <img src="bleh.png" alt="Resulting Image Generations" width="300" height="200">
+
 </section>
+
+
 
   <h3>Skills</h3>
   <p>
