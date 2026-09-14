@@ -51,11 +51,44 @@
 
 <p>
   Graduate student pursuing a master's in Data Science with an emphasis on Machine
-  Learning. A few things I've built — expand any project for detail, or see its
-  repository for the full journal.
+  Learning. Here are a few things I've built; expand any project for details.
 </p>
 
 <h3>Projects</h3>
+
+<details>
+  <summary>
+    Cartez
+    <span>Place recommendations for a live social map app: model, data pipeline and production serving.</span>
+    <span class="tech">PyTorch · FastAPI · PostgreSQL + pgvector (Supabase) · Render</span>
+  </summary>
+
+  <p>Cartez is a social map app where people save and share places they love. I co-founded it
+  and built its recommendation system end to end, from raw training data to a live service
+  inside the app.</p>
+
+  <p>Places are embedded from content features (category, a set of "vibe" tags, and normalized
+  price, rating and review count) rather than a learned ID, so a place a user adds gets an
+  embedding the moment it exists. Users aren't learned as IDs either: a user's embedding is
+  built from the mean of the places they've saved, the way YouTube's candidate-generation
+  network represents watch history. That trades some personalization for cold start, which
+  was the right trade for a young app where most people have short histories: a new user gets
+  recommendations after a single save, with no retraining and no per-user parameters. The
+  model trained with in-batch negatives, pulling each user toward places they engaged with and
+  away from the rest of the batch.</p>
+
+  <p>A new app has no interaction data, so the model learned general taste from a public
+  dataset of 340M+ reviews across ~2.6M places, which I processed into training pairs and
+  trained on a consumer GPU. At serving time the catalog narrows to the launch region.</p>
+
+  <p>The model runs as a FastAPI service on Render that embeds places as they're added, with
+  embeddings stored in Postgres via pgvector on Supabase. Recommendations restrict candidates to
+  a radius around the user, rank them by similarity, and boost places real users added over
+  entries seeded from the dataset, so the map favors the community over the starter catalog. A
+  scheduled job refreshes each user's recommendation pool daily.</p>
+
+  <a class="repo" href="https://cartezmap.com" target="_blank">Live app →</a>
+</details>
 
 <details>
   <summary>
