@@ -35,8 +35,9 @@
   details:last-of-type { border-bottom: 1px solid var(--line); }
   summary { cursor: pointer; font-weight: 600; }
   summary::marker { color: var(--muted); }
-  summary .tech { display: block; font-weight: 400; margin-top: 4px; }
+  summary span { display: block; font-weight: 400; margin-top: 2px; }
   .tech { color: var(--muted); font-size: .85rem; }
+  details p { margin: 12px 0; }
   img, video { display: block; width: 100%; height: auto; margin: 16px 0 0; }
   .repo { display: inline-block; margin-top: 12px; font-size: .9rem; }
   .inline { list-style: none; padding: 0; display: flex; gap: 20px; }
@@ -58,67 +59,80 @@
 
 <details>
   <summary>
-    LLM-Powered Language Feedback API
-    <span class="tech">Python · FastAPI · Anthropic Claude API · Prompt Engineering</span>
+    News Aggregator
+    <span>Found when different outlets covered the same story, and summarized each one, daily.</span>
+    <span class="tech">Python · AWS (EC2, Lambda, S3, RDS) · Selenium · Sentence-Transformers · PRIMERA · React</span>
   </summary>
-  <ul>
-    <li>Built a REST API that analyzes foreign language sentences and returns structured grammar feedback using Claude Haiku.</li>
-    <li>Implemented Anthropic Tool use for guaranteed schema-compliant JSON outputs.</li>
-    <li>Engineered system prompt to reliably produce accurate, structured feedback across 8+ languages including non-Latin scripts.</li>
-    <li>Added in-memory caching to reduce redundant API calls.</li>
-    <li>Wrote 9 test cases covering multiple languages, error types, and edge cases.</li>
-  </ul>
-  <a class="repo" href="https://github.com/chohbein/pangea-intern-task-2026" target="_blank">Repository →</a>
-</details>
 
-<details>
-  <summary>
-    News Article Aggregation Website
-    <span class="tech">Python · SQL · AWS · NLP · Web Scraping · Summarization</span>
-  </summary>
-  <ul>
-    <li>An end-to-end data pipeline that scrapes news articles from various sources, clusters similar articles, extracts keywords, and summarizes each cluster into a concise paragraph.</li>
-    <li>Scraping with Selenium, orchestrated by AWS Lambda + EC2, with an AWS RDS relational database for storage.</li>
-    <li>Keyword extraction via a weighted ensemble of part-of-speech + named entity recognition (spaCy), semantic relevance (KeyBERT), and manually included common keywords.</li>
-    <li>Chose the clustering approach by testing
-      <a href="https://aclanthology.org/W00-0403.pdf" target="_blank">centroid-based summarization</a> against
-      <a href="https://arxiv.org/pdf/2110.08499" target="_blank">PRIMERA</a>. PRIMERA produced better summaries.</li>
-  </ul>
+  <p>One event gets covered by CNN, Fox, AP, NPR and more, each with its own headline and
+  framing. This system ran on its own every day: it scraped eight outlets, detected which
+  articles from different outlets described the same event, and wrote one summary per story
+  from the full text of every article, served through a React web app. I shut it down in
+  2025, when the scraping costs outgrew its use.</p>
+
   <video controls preload="none">
     <source src="news_site_vid.mp4" type="video/mp4">
   </video>
+
+  <p>Every outlet needed its own Selenium scraper, run in parallel with one headless browser
+  per site, handling infinite scroll, pop-up modals, a different date format on every site,
+  and the same article appearing under several section URLs. A second pass pulled full article
+  bodies for anything that landed in a story; paywalled outlets counted toward clustering but
+  not summaries.</p>
+
+  <p>Clustering had no labels and no fixed number of stories per day, so I ran DBSCAN on
+  Sentence-Transformer headline embeddings: it infers its own cluster count and leaves stories
+  only one outlet covered out as noise. Raw similarity had a failure mode, though. One outlet's
+  near-duplicate headlines, like live updates and cross-posts between sections, clustered with
+  each other, producing "stories" with a single source. I fixed it by adjusting similarities
+  before clustering: penalizing same-outlet pairs, and adding a small boost per shared keyword
+  from a weighted ensemble of spaCy NER, KeyBERT and part-of-speech tagging.</p>
+
+  <p>For summaries I compared a reimplementation of
+  <a href="https://aclanthology.org/W00-0403.pdf" target="_blank">Radev et al.'s centroid
+  method</a>, which extracts the sentences closest to a cluster's TF-IDF centroid, against
+  <a href="https://arxiv.org/pdf/2110.08499" target="_blank">PRIMERA</a>, a transformer
+  pretrained for multi-document summarization. ROUGE-2 against the source articles came out
+  similar, but with no reference summaries for daily news that only measures overlap, so manual
+  review decided it. Because the extractive method copies sentences verbatim, it also copied
+  scraping noise: photo captions, "Getty Images" credits, promo headlines embedded in article
+  bodies. PRIMERA wrote coherent prose. The centroid method was far faster, which didn't matter
+  for a once-a-day batch job, so PRIMERA shipped.</p>
+
+  <p>The GPU only ran while it was needed. A CPU instance handled scraping, clustering and
+  loading, then wrote cluster text to S3 and triggered a Lambda that started a GPU instance;
+  that instance generated the summaries, wrote them back to S3, and shut itself down. Data
+  loaded into Postgres through staging tables with idempotent inserts, so rerunning a day's
+  job was safe.</p>
+
+  <p>What I'd change: clustering thresholds were tuned by inspection rather than measured, so
+  next is labeling a few hundred headline pairs to report precision and recall. ROUGE can't
+  catch a hallucinated summary, which calls for an NLI-based faithfulness check. And a scraper
+  broken by a site redesign would fail silently; tracking article counts per outlet would
+  flag it.</p>
+
   <a class="repo" href="https://github.com/chohbein/newsapp" target="_blank">Repository →</a>
 </details>
 
 <details>
   <summary>
-    Histopathologic Cancer Detection
-    <span class="tech">PyTorch · CNNs · GPU Training · scikit-learn</span>
+    LLM-Powered Language Feedback API
+    <span>Schema-guaranteed grammar feedback on sentences in 8+ languages.</span>
+    <span class="tech">Python · FastAPI · Anthropic Claude API · Prompt Engineering</span>
   </summary>
-  <ul>
-    <li>Compared two CNN architectures to predict the presence of tumors in histopathologic images, as a final project for a deep learning course.</li>
-    <li>Tuned for a laptop GPU that was overheating on long training runs — mixed precision, multiple workers, image downsizing, and batch-size tuning.</li>
-    <li>H<sub>0</sub>: fine-grained detail wins — small kernels, minimal pooling, padding to keep edge information, light dropout.</li>
-    <li>H<sub>a</sub>: broad trends win — larger kernels, aggressive pooling, heavy dropout.</li>
-    <li>Final improvements: early stopping, LR scheduling, image augmentation.</li>
-    <li><strong>Result:</strong> the fine-detail model scored better — ROC-AUC 0.981, with the false-negative rate prioritized down to 2%.</li>
-  </ul>
-  <a class="repo" href="https://github.com/chohbein/Cancer-Detection" target="_blank">Repository →</a>
-</details>
 
-<details>
-  <summary>
-    Monet Painting GAN
-    <span class="tech">PyTorch · CycleGAN · CLIP Embeddings · Style Transfer</span>
-  </summary>
-  <ul>
-    <li>Unpaired image style transfer to turn photos into Monet-style paintings.</li>
-    <li>CycleGAN baseline, stabilized with spectral normalization, label smoothing, noise injection, delayed discriminator updates, mixed precision, and LR tuning.</li>
-    <li>CLIP-conditioned GAN: frozen CLIP embeddings guide the generator semantically, a U-Net generator preserves spatial detail, and CLIP perceptual loss preserves content while applying style.</li>
-    <li><strong>Result:</strong> the CLIP-conditioned approach produced higher-quality generations than the baseline in one third of the training time.</li>
-  </ul>
-  <img src="bleh.png" alt="Generated Monet-style images" loading="lazy">
-  <a class="repo" href="https://github.com/chohbein/GAN" target="_blank">Repository →</a>
+  <p>A REST API that takes a sentence in a foreign language and returns structured grammar
+  feedback. The hard requirement was that the response be machine-readable every time — a
+  language-learning client can't handle a model that occasionally answers in prose — so I
+  used Anthropic's tool-use interface to constrain output to a fixed schema rather than
+  parsing free text and hoping.</p>
+
+  <p>The prompt work was the real effort: getting consistent, accurate feedback across 8+
+  languages including non-Latin scripts, where failure modes differ by language. Responses
+  are cached in memory, since learners hit the same common sentences repeatedly. Tests cover
+  multiple languages, error types, and edge cases including non-Latin scripts.</p>
+
+  <a class="repo" href="https://github.com/chohbein/pangea-intern-task-2026" target="_blank">Repository →</a>
 </details>
 
 <h3>Elsewhere</h3>
