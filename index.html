@@ -60,32 +60,41 @@
   <summary>
     Cartez
     <span>Place recommendations for a live social map app: model, data pipeline and production serving.</span>
-    <span class="tech">PyTorch · FastAPI · PostgreSQL + pgvector (Supabase) · Render</span>
+    <span class="tech">PyTorch · FastAPI · PostgreSQL (pgvector, PostGIS) · Supabase · Render</span>
   </summary>
 
   <p>Cartez is a social map app where people save and share places they love. I co-founded it
   and built its recommendation system end to end, from raw training data to a live service
   inside the app.</p>
 
-  <p>Places are embedded from content features (category, a set of "vibe" tags, and normalized
-  price, rating and review count) rather than a learned ID, so a place a user adds gets an
-  embedding the moment it exists. Users aren't learned as IDs either: a user's embedding is
-  built from the mean of the places they've saved, the way YouTube's candidate-generation
-  network represents watch history. That trades some personalization for cold start, which
-  was the right trade for a young app where most people have short histories: a new user gets
-  recommendations after a single save, with no retraining and no per-user parameters. The
-  model trained with in-batch negatives, pulling each user toward places they engaged with and
+  <p>It's a two-tower model. The place tower maps an 84-dimensional feature vector (category, a
+  set of "vibe" tags, and normalized price, rating and review count) to a 128-dimensional
+  embedding. There's no learned ID, so a place a user adds gets an embedding the moment it
+  exists. The user tower averages the feature vectors of the places a user has saved and runs
+  that through its own learned network into the same space. That trades some personalization
+  for cold start, the right trade for a young app where most people have short histories: a
+  user can get recommendations from a single save, with no retraining and no per-user
+  parameters. Training used in-batch negatives, pulling each user toward places they liked and
   away from the rest of the batch.</p>
 
-  <p>A new app has no interaction data, so the model learned general taste from a public
-  dataset of 340M+ reviews across ~2.6M places, which I processed into training pairs and
-  trained on a consumer GPU. At serving time the catalog narrows to the launch region.</p>
+  <p>A new app has no interaction data, so the model learned general taste from the UCSD Google
+  Local reviews dataset. I treated four- and five-star reviews as stand-ins for saves and kept
+  users with at least five, leaving 342M positive interactions from 16.2M users across ~2.6M
+  places, and trained on a consumer GPU. At serving time the catalog narrows to the launch
+  region.</p>
 
   <p>The model runs as a FastAPI service on Render that embeds places as they're added, with
-  embeddings stored in Postgres via pgvector on Supabase. Recommendations restrict candidates to
-  a radius around the user, rank them by similarity, and boost places real users added over
+  embeddings stored in Postgres via pgvector on Supabase. Recommendations use PostGIS to restrict
+  candidates to a radius around the user, rank them by vector similarity, and boost places real users added over
   entries seeded from the dataset, so the map favors the community over the starter catalog. A
   scheduled job refreshes each user's recommendation pool daily.</p>
+
+  <p>What I'd change: evaluation is the weakest part. Training loss beat the random in-batch
+  baseline, but only modestly. Nearest-neighbor spot checks were coherent for places with rich
+  tags (fast-food chains cluster together) and degenerate where features were thin: locations of
+  the same chain have near-identical features, so they collapse to one embedding. There are no
+  offline ranking metrics yet. Next is a held-out split measuring recall@k on users' saved
+  places, then save-through rate on recommendations once the app has traffic.</p>
 
   <a class="repo" href="https://cartezmap.com" target="_blank">Live app →</a>
 </details>
