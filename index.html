@@ -1,154 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Cristian Hohbein</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 0 16px;
-      line-height: 1.6;
-      color: #111;
-      background-color: #e6dac1;
-    }
-    h1 { margin-bottom: 0; }
-    h2 { margin-top: 4px; font-weight: normal; color: #444; }
-    a { color: #0366d6; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cristian Hohbein</title>
+<meta name="description" content="Cristian Hohbein — data science and machine learning projects.">
+<style>
+  :root {
+    --bg: #e6dac1;
+    --ink: #1c1a16;
+    --muted: #6d6353;
+    --line: #cbbda1;
+    --link: #8c3b1e;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font: 16px/1.6 system-ui, -apple-system, sans-serif;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 64px 20px 96px;
+    color: var(--ink);
+    background: var(--bg);
+  }
+  h1 { font-size: 1.6rem; margin: 0; }
+  h2 { font-size: 1rem; font-weight: 400; color: var(--muted); margin: 2px 0 20px; }
+  h3 { font-size: .8rem; text-transform: uppercase; letter-spacing: .1em;
+       color: var(--muted); margin: 48px 0 8px; }
+  a { color: var(--link); }
+  a:hover { text-decoration: none; }
+  ul { padding-left: 18px; }
+  li { margin: 6px 0; }
+
+  details { border-top: 1px solid var(--line); padding: 14px 0; }
+  details:last-of-type { border-bottom: 1px solid var(--line); }
+  summary { cursor: pointer; font-weight: 600; }
+  summary::marker { color: var(--muted); }
+  summary .tech { display: block; font-weight: 400; margin-top: 4px; }
+  .tech { color: var(--muted); font-size: .85rem; }
+  img, video { display: block; width: 100%; height: auto; margin: 16px 0 0; }
+  .repo { display: inline-block; margin-top: 12px; font-size: .9rem; }
+  .inline { list-style: none; padding: 0; display: flex; gap: 20px; }
+  #email { color: var(--link); text-decoration: underline; cursor: pointer; }
+</style>
 </head>
 <body>
-  <h1>Cristian Hohbein</h1>
-  <h2>Graduate Student | Machine Learning & Data Science</h2>
 
-  <p>
-    I am a graduate student based in Southern California, currently pursuing a masters in Data Science with an emphasis on Machine Learning. Here are a few of my projects, see their respective repositories for a more in-depth journal.
-  </p>
+<h1>Cristian Hohbein</h1>
+<h2>Data Science &amp; Machine Learning · Southern California</h2>
 
-  <h3>Projects</h3>
+<p>
+  Graduate student pursuing a master's in Data Science with an emphasis on Machine
+  Learning. A few things I've built — expand any project for detail, or see its
+  repository for the full journal.
+</p>
 
-<section class="project">
-  <h4><a href="https://github.com/chohbein/pangea-intern-task-2026">LLM-Powered Language Feedback API</a></h4>
-  <p class="tech">Python · FastAPI · Anthropic Claude API · Prompt Engineering</p>
-  <ul style="list-style-type: disc; margin-left: 20px;">
+<h3>Projects</h3>
+
+<details>
+  <summary>
+    LLM-Powered Language Feedback API
+    <span class="tech">Python · FastAPI · Anthropic Claude API · Prompt Engineering</span>
+  </summary>
+  <ul>
     <li>Built a REST API that analyzes foreign language sentences and returns structured grammar feedback using Claude Haiku.</li>
     <li>Implemented Anthropic Tool use for guaranteed schema-compliant JSON outputs.</li>
     <li>Engineered system prompt to reliably produce accurate, structured feedback across 8+ languages including non-Latin scripts.</li>
     <li>Added in-memory caching to reduce redundant API calls.</li>
-    <li>Wrote 9 test cases covering multiple languages, error types, and edge cases including non-Latin scripts.</li>
+    <li>Wrote 9 test cases covering multiple languages, error types, and edge cases.</li>
   </ul>
-</section>
-<hr>
+  <a class="repo" href="https://github.com/chohbein/pangea-intern-task-2026" target="_blank">Repository →</a>
+</details>
 
-<section class="project">
-  <h4><a href="https://github.com/chohbein/newsapp" target="_blank">News Article Aggregation Website</a></h4>
-  <p class="tech">
-    Python · SQL · AWS · NLP · webscraping · multi-document summarizing · keyword extraction · database management
-  </p>
-  <ul style="list-style-type: disc; margin-left: 20px;">
-    <li>This passion project of mine is an end-to-end date pipeline to webscrape news articles from various sources, cluster similar articles, extract keywords, and summarize each article cluster into a concise paragraph. </li>
-    <li>Scraping was done with Selenium, orchestrated by AWS Lambda + EC2 with a relational AWS RDS database for storage. </li>
-    <li>Keyword extraction used a weighted ensemble of Part-of-Speech + Named Entity recognition (spaCy), Semantic-Relevance (KeyBERT), and manually-included common keywords.</li>
-    <li>The article clustering process was decided by testing 2 different approaches:  <a href="https://aclanthology.org/W00-0403.pdf">Centroid-Based Summarization of Multiple Documents</a> vs
-    <a href="https://arxiv.org/pdf/2110.08499">PRIMERA: Pyramid-based Masked Sentence Pre-Training for Multi-doc Summarizing</a>. Our testing found that PRIMARA gave better summaries; see the <a href="https://github.com/chohbein/newsapp/blob/main/README.md">project repo</a> for more info on my process. </li>
+<details>
+  <summary>
+    News Article Aggregation Website
+    <span class="tech">Python · SQL · AWS · NLP · Web Scraping · Summarization</span>
+  </summary>
+  <ul>
+    <li>An end-to-end data pipeline that scrapes news articles from various sources, clusters similar articles, extracts keywords, and summarizes each cluster into a concise paragraph.</li>
+    <li>Scraping with Selenium, orchestrated by AWS Lambda + EC2, with an AWS RDS relational database for storage.</li>
+    <li>Keyword extraction via a weighted ensemble of part-of-speech + named entity recognition (spaCy), semantic relevance (KeyBERT), and manually included common keywords.</li>
+    <li>Chose the clustering approach by testing
+      <a href="https://aclanthology.org/W00-0403.pdf" target="_blank">centroid-based summarization</a> against
+      <a href="https://arxiv.org/pdf/2110.08499" target="_blank">PRIMERA</a>. PRIMERA produced better summaries.</li>
   </ul>
-  <video width="640" height="360" controls>
-  <source src="news_site_vid.mov" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
-</section>
-<hr>
-  
-<section class="project">
-  <h4><a href="https://github.com/chohbein/Cancer-Detection" target="_blank">Histopathologic Cancer Detection</a></h4>
-  <p class="tech">CNN · GPU Training · PyTorch · scikit-learn</p>
-  <ul style="list-style-type: disc; margin-left: 20px;">
-  <li>This is my final project for a deep learning course. I compared 2 different CNN architectures to predict the presence of tumors in histopathologic images.</li>
-  <li>One of the major achievements I took from this project was the performance tuning I made to work within the limits of my poor little laptop GPU. </li>
-  <li>Initially, I was hit with long overheating and long training times. I resolved this with techniques such as mixed precision, multiple workers, image downsizing, and batch-size tuning.</li>
-  <li>I approached model architecture by testing 2 different hypotheses: Because my visual analysis of the images showed no noticable indications of cancerous features, I suspected a model focused on fine-grained details would work best.</li>
-  <li>H<sub>0</sub>: focus on fine-grained details
-    <ul>
-      <li>Small kernels to capture small, refined details</li>
-      <li>Minimal pooling to maintain detail.</li>
-      <li>Padding to maintain edge information.</li>
-      <li>Light dropout to reduce overfitting while also maintaining its capacity to recognize subtle patterns.</li>
-    </ul></li>
-    <li>H<sub>a</sub>: a focus on broader trends in the images.
-      <ul>
-        <li>Larger kernels</li>
-        <li>Aggressive pooling to emphasize large features.</li>
-        <li>High dropout to help broad-feature neurons from learning noise.
-      </ul>
-    </li>
-  </ul>
-  <h7>Final improving steps</h7>
-  <p class="tech">
-    <ul>
-      <li>Early stopping</li>
-      <li>LR Scheduling</li>
-      <li>Image alteration</li>
-    </ul>
-  </p>
-  <b>Results</b>
-  <p class="tech">
-  Our model focusing on fine details within the images scored better. Thus, we accept our null hypothesis.
-  After further improving steps, we concluded with the following:
-  <br>
-  <br>
-  
-  ROC-AUC:
-  0.9813459611111561
-  <br>
-  <br>
-  Prioritized false-negative rate down to 2%
-  </p>
-</section>
-<hr>
+  <video controls preload="none">
+    <source src="news_site_vid.mp4" type="video/mp4">
+  </video>
+  <a class="repo" href="https://github.com/chohbein/newsapp" target="_blank">Repository →</a>
+</details>
 
-<section class="project">
-  <h4><a href="https://github.com/chohbein/GAN" target="_blank">Monet Painting GAN</a></h4>
-  <p class="tech">Unpaired Image Style Transfer · PyTorch · CycleGAN · CLIP Embeddings · GANs</p>
-  <ul style="list-style-type: disc; margin-left: 20px;">
+<details>
+  <summary>
+    Histopathologic Cancer Detection
+    <span class="tech">PyTorch · CNNs · GPU Training · scikit-learn</span>
+  </summary>
+  <ul>
+    <li>Compared two CNN architectures to predict the presence of tumors in histopathologic images, as a final project for a deep learning course.</li>
+    <li>Tuned for a laptop GPU that was overheating on long training runs — mixed precision, multiple workers, image downsizing, and batch-size tuning.</li>
+    <li>H<sub>0</sub>: fine-grained detail wins — small kernels, minimal pooling, padding to keep edge information, light dropout.</li>
+    <li>H<sub>a</sub>: broad trends win — larger kernels, aggressive pooling, heavy dropout.</li>
+    <li>Final improvements: early stopping, LR scheduling, image augmentation.</li>
+    <li><strong>Result:</strong> the fine-detail model scored better — ROC-AUC 0.981, with the false-negative rate prioritized down to 2%.</li>
+  </ul>
+  <a class="repo" href="https://github.com/chohbein/Cancer-Detection" target="_blank">Repository →</a>
+</details>
+
+<details>
+  <summary>
+    Monet Painting GAN
+    <span class="tech">PyTorch · CycleGAN · CLIP Embeddings · Style Transfer</span>
+  </summary>
+  <ul>
     <li>Unpaired image style transfer to turn photos into Monet-style paintings.</li>
-    <li>Compared two architectural approaches: CycleGAN (baseline) vs. a GAN conditioned on pre-trained CLIP embeddings.</li>
-    <li>CycleGAN (baseline)</li>
-      <ul>
-        <li>Performed unpaired image-to-image translation as a baseline.</li>
-        <li>Stabilized and improved training with adjustments including spectral normalization, label smoothing, noise injection, delayed discriminator updates, mixed precision, and learning rate tuning.</li>
-      </ul>
-    <li>CLIP-Conditioned GAN</li>
-      <ul>
-        <li>Uses frozen pre-trained CLIP embeddings to provide semantic guidance to the generator.</li>
-        <li>U-Net generator skip connections preserve fine-grained spatial detail and structure.</li>
-        <li>CLIP-based perceptual loss preserves the original content while applying Monet style.</li>
-      </ul>
+    <li>CycleGAN baseline, stabilized with spectral normalization, label smoothing, noise injection, delayed discriminator updates, mixed precision, and LR tuning.</li>
+    <li>CLIP-conditioned GAN: frozen CLIP embeddings guide the generator semantically, a U-Net generator preserves spatial detail, and CLIP perceptual loss preserves content while applying style.</li>
+    <li><strong>Result:</strong> the CLIP-conditioned approach produced higher-quality generations than the baseline in one third of the training time.</li>
   </ul>
-  <b>Results</b>
-  <p class="tech">
-    The CLIP-Conditioned approach achieved higher-quality Monet-style generations than the baseline while requiring only 1/3 of the training time. Longer training could further improve results.
-  </p>
-  <img src="bleh.png" alt="Resulting Image Generations" width="500" height="350" style="display: block; margin: 0 auto;">
+  <img src="bleh.png" alt="Generated Monet-style images" loading="lazy">
+  <a class="repo" href="https://github.com/chohbein/GAN" target="_blank">Repository →</a>
+</details>
 
-</section>
-<hr>
-
-<h3>Links</h3>
-<ul>
+<h3>Elsewhere</h3>
+<ul class="inline">
   <li><a href="https://github.com/chohbein" target="_blank">GitHub</a></li>
-  <li id="email-header" style="cursor:pointer; color:blue; text-decoration:underline;">Email</li>
+  <li><span id="email">Email</span></li>
 </ul>
 
 <script>
-  const email = "chohbein2@gmail.com";
-  document.getElementById("email-header").addEventListener("click", () => {
-    navigator.clipboard.writeText(email).then(() => {
-      alert("Email copied to clipboard!");
-    });
-  });
+  email.onclick = () => navigator.clipboard.writeText("chohbein2@gmail.com")
+    .then(() => email.textContent = "Copied!");
 </script>
+
 </body>
 </html>
